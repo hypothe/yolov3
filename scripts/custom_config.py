@@ -34,7 +34,7 @@ if __name__ == '__main__':
 			strl = re.sub(r'(?<=filters=)\d+(?=\s*activation=linear)', str(num_filters), strl)
 			strl = re.sub(r'(?<=classes=)\d+', str(num_classes), strl)
 			strl = re.sub(r'(?<=max_batches=)\d+', str(max_batches), strl)
-			strl = re.sub(r'(?<=steps=)\d+,\d+', str(0.8*max_batches)+str(0.9*max_batches), strl)
+			strl = re.sub(r'(?<=steps=)\d+,\d+', str(int(0.8*max_batches))+','+str(int(0.9*max_batches)), strl)
 			custom_cfg_str += strl + "\n"
 
 		with open(opt.custom_cfg, "w") as f:
