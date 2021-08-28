@@ -8,6 +8,7 @@ if __name__ == '__main__':
 		parser.add_argument('--cfg', type=str, default='../cfg/yolor_p6.cfg', help='model.yaml path')
 		parser.add_argument('--custom-cfg', type=str, default='../cfg/yolor_p6_custom.cfg', help='custom_model.yaml path')
 		parser.add_argument('--data', type=str, default='../data/coco.yaml', help='data.yaml path')
+		parser.add_argument('--legacy-data', type=str, default='', help='output name of the legacy data file generated (leave empty for none)')
 
 		
 		opt = parser.parse_args()
@@ -35,3 +36,17 @@ if __name__ == '__main__':
 
 			with open(opt.custom_cfg, "w") as f:
 				f.write(custom_cfg_str)
+
+	if opt.legacy_data:
+		# generate a file listing the class names
+		names_file = re.sub(r'\.yaml', '.names', opt.legacy_data)
+		with open(names_file, "w") as f:
+			for name in dataMap['names']:
+				f.write("%s\n" % name)
+		# generate the legacy version of the data file,
+		# needed by yolov3-archive
+		with open(opt.legacy_data, "w") as f:
+			f.write("classes=%d\n" % num_classes)
+			f.write("train=%s\n" % dataMap['train'])
+			f.write("valid=%s\n" % dataMap['val'])
+			f.write("names=%s\n" % names_file)
