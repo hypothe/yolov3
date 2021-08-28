@@ -23,6 +23,7 @@ if __name__ == '__main__':
 	#str_clsses = "classes=" + num_classes
 	num_filters = (num_classes + 5) * 3
 	#str_filters = "filters=" + num_filters
+	max_batches = 2000*num_classes
 
 	custom_cfg_str=""
 
@@ -30,8 +31,10 @@ if __name__ == '__main__':
 		for line in f:
 			strl = line.strip()
 			#print(strl)
-			strl = re.sub(r'(?<=filters=)\d+', str(num_filters), strl)
+			strl = re.sub(r'(?<=filters=)\d+(?=\s*activation=linear)', str(num_filters), strl)
 			strl = re.sub(r'(?<=classes=)\d+', str(num_classes), strl)
+			strl = re.sub(r'(?<=max_batches=)\d+', str(max_batches), strl)
+			strl = re.sub(r'(?<=steps=)\d+,\d+', str(0.8*max_batches)+str(0.9*max_batches), strl)
 			custom_cfg_str += strl + "\n"
 
 		with open(opt.custom_cfg, "w") as f:
