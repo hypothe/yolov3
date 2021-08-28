@@ -29,10 +29,10 @@ if __name__ == '__main__':
 
 	with open(opt.cfg, "r") as f:
 		lines = f.readlines()
-  	for index, line in enumerate(lines):
+		for index, line in enumerate(lines):
 			strl = line.strip()
 			if index < len(lines)-1 and re.match('activation=linear', lines[index+1].strip()):
-      	strl = re.sub(r'(?<=filters=)\d+', str(num_filters), strl)
+				strl = re.sub(r'(?<=filters=)\d+', str(num_filters), strl)
 			strl = re.sub(r'(?<=classes=)\d+', str(num_classes), strl)
 			strl = re.sub(r'(?<=max_batches=)\d+', str(max_batches), strl)
 			strl = re.sub(r'(?<=steps=)\d+,\d+', str(int(0.8*max_batches))+','+str(int(0.9*max_batches)), strl)
