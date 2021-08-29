@@ -39,7 +39,7 @@ if __name__ == '__main__':
 			strl = re.sub(r'(?<=max_batches=)\d+', str(max_batches), strl)
 			strl = re.sub(r'(?<=steps=)\d+,\d+', str(int(0.8*max_batches))+','+str(int(0.9*max_batches)), strl)
 
-			strft = re.sub(r'(?<=learning_rate=)\d+', str(1e-5), strl)
+			strft = re.sub(r'(?<=learning_rate=)\d+\.*\d*', str(0.00001), strl)
 
 			custom_cfg_str += strl + "\n"
 			finetune_cfg_str += strft + "\n"
@@ -47,7 +47,7 @@ if __name__ == '__main__':
 		with open(opt.custom_cfg, "w") as f:
 			f.write(custom_cfg_str)
 		if opt.fine_tune:
-			cfg_path, cfg_ext = os.path.splitext(opt.cfg)
+			cfg_path, cfg_ext = os.path.splitext(opt.custom_cfg)
 			finetune_cfg = cfg_path+"_finetune"+cfg_ext
 			with open(finetune_cfg, "w") as f:
 				f.write(finetune_cfg_str)
