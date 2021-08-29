@@ -7,6 +7,7 @@ if __name__ == '__main__':
 	parser = argparse.ArgumentParser()
 	parser.add_argument('--cfg', type=str, default='../cfg/yolor_p6.cfg', help='model.yaml path')
 	parser.add_argument('--custom-cfg', type=str, default='../cfg/yolor_p6_custom.cfg', help='custom_model.yaml path')
+	parser.add_argument('--fine-tune', action='store_true', help='generate another cfg with lower learning rate')
 	parser.add_argument('--data', type=str, default='../data/coco.yaml', help='data.yaml path')
 	parser.add_argument('--legacy-data', type=str, default='', help='output name of the legacy data file generated (leave empty for none)')
 
@@ -26,6 +27,7 @@ if __name__ == '__main__':
 	max_batches = 2000*num_classes
 
 	custom_cfg_str=""
+	finetune_cfg_str=""
 
 	with open(opt.cfg, "r") as f:
 		lines = f.readlines()
@@ -36,10 +38,19 @@ if __name__ == '__main__':
 			strl = re.sub(r'(?<=classes=)\d+', str(num_classes), strl)
 			strl = re.sub(r'(?<=max_batches=)\d+', str(max_batches), strl)
 			strl = re.sub(r'(?<=steps=)\d+,\d+', str(int(0.8*max_batches))+','+str(int(0.9*max_batches)), strl)
+
+			strft = re.sub(r'(?<=learning_rate=)\d+', str(1e-5), strl)
+
 			custom_cfg_str += strl + "\n"
+			finetune_cfg_str += strft + "\n"
 
 		with open(opt.custom_cfg, "w") as f:
 			f.write(custom_cfg_str)
+		if opt.fine_tune:
+			cfg_path, cfg_ext = os.path.splitext(opt.cfg)
+			finetune_cfg = cfg_path+"_finetune"+cfg_ext
+			with open(finetune_cfg, "w") as f:
+				f.write(finetune_cfg_str)
 
 	if opt.legacy_data:
 		# generate a file listing the class names
