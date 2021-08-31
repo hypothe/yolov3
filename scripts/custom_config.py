@@ -68,7 +68,7 @@ if __name__ == '__main__':
 			train_rel = re.sub(r'^.*'+proj_dir+'/', "", dataMap['train'])
 			val_rel = re.sub(r'^.*'+proj_dir+'/', "", dataMap['val'])
 
-			print("%s \n %s \n %s" % (set_path, proj_dir, train_rel))
+			#print("%s \n %s \n %s" % (set_path, proj_dir, train_rel))
 
 			f.write("classes=%d\n" % num_classes)
 			# f.write("train=%s\n" % dataMap['train'])
