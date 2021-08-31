@@ -63,12 +63,12 @@ if __name__ == '__main__':
 		# needed by yolov3-archive
 		with open(opt.legacy_data, "w") as f:
 			set_path, _ = os.path.split(opt.legacy_data)
-			proj_dir, _ = os.path.split(set_path)
+			_, proj_dir = os.path.split(set_path)
 
 			train_rel = re.sub(r'^.*'+proj_dir+'/', "", dataMap['train'])
 			val_rel = re.sub(r'^.*'+proj_dir+'/', "", dataMap['val'])
 
-			print("%s \n %s n %s" % (set_path, proj_dir, train_rel))
+			print("%s \n %s \n %s" % (set_path, proj_dir, train_rel))
 
 			f.write("classes=%d\n" % num_classes)
 			# f.write("train=%s\n" % dataMap['train'])
