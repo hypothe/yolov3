@@ -73,6 +73,6 @@ if __name__ == '__main__':
 			f.write("classes=%d\n" % num_classes)
 			# f.write("train=%s\n" % dataMap['train'])
 			#f.write("valid=%s\n" % dataMap['val'])
-			f.write("train=%s\n" % os.path.join(proj_dir. train_rel))
-			f.write("valid=%s\n" % os.path.join(proj_dir. val_rel))
+			f.write("train=%s\n" % os.path.join(proj_dir, train_rel))
+			f.write("valid=%s\n" % os.path.join(proj_dir, val_rel))
 			f.write("names=%s\n" % names_file)
