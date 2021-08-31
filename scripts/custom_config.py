@@ -55,13 +55,24 @@ if __name__ == '__main__':
 	if opt.legacy_data:
 		# generate a file listing the class names
 		names_file = re.sub(r'\.yaml', '.names', opt.legacy_data)
+
 		with open(names_file, "w") as f:
 			for name in dataMap['names']:
 				f.write("%s\n" % name)
 		# generate the legacy version of the data file,
 		# needed by yolov3-archive
 		with open(opt.legacy_data, "w") as f:
+			set_path, _ = os.path.split(opt.legacy_data)
+			proj_dir, _ = os.path.split(set_path)
+
+			train_rel = re.sub(r'^.*'+proj_dir+'/', "", dataMap['train'])
+			val_rel = re.sub(r'^.*'+proj_dir+'/', "", dataMap['val'])
+
+			print("%s \n %s n %s", % (set_path, proj_dir, train_rel))
+
 			f.write("classes=%d\n" % num_classes)
-			f.write("train=%s\n" % dataMap['train'])
-			f.write("valid=%s\n" % dataMap['val'])
+			# f.write("train=%s\n" % dataMap['train'])
+			#f.write("valid=%s\n" % dataMap['val'])
+			f.write("train=%s\n" % os.path.join(proj_dir. train_rel))
+			f.write("valid=%s\n" % os.path.join(proj_dir. val_rel)])
 			f.write("names=%s\n" % names_file)
