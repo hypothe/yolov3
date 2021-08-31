@@ -818,10 +818,10 @@ def output_to_target(output, width, height):
 
                 targets.append([i, cls, x, y, w, h, conf])
 
-    targ = np.array(targets)
-    if isinstance(targ, torch.Tensor):
-        targ = targ.cpu().numpy()
-    return targ
+    
+    if isinstance(targets, torch.Tensor):
+        targets = targets.cpu().numpy()
+    return np.array(targets)
 
 
 # Plotting functions ---------------------------------------------------------------------------------------------------
