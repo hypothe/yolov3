@@ -818,7 +818,7 @@ def output_to_target(output, width, height):
 
                 targets.append([i, cls, x, y, w, h, conf])
 
-    print(targets.type())
+    print(type(targets))
     if isinstance(targets, torch.Tensor):
         targets = targets.cpu().numpy()
     return np.array(targets)
