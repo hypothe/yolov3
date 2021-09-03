@@ -49,8 +49,8 @@ if __name__ == '__main__':
 		if opt.fine_tune:
 			cfg_path, cfg_ext = os.path.splitext(opt.custom_cfg)
 			finetune_cfg = cfg_path+"_finetune"+cfg_ext
-			with open(finetune_cfg, "w") as f:
-				f.write(finetune_cfg_str)
+			with open(finetune_cfg, "w") as w:
+				w.write(finetune_cfg_str)
 
 	if opt.legacy_data:
 		# generate a file listing the class names
